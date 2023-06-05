@@ -58,8 +58,8 @@ public class Main {
         }
     }
     public static void odebraniOsoby() {
-        System.out.println("Zadejte rodné číslo osoby, kterou chcete odebrat. Zadávejte bez lomítka (YYMMDDXXXX): ");
-        String rodneCislo = scanner.next();
+        System.out.println("Zadejte rodné číslo osoby, kterou chcete odebrat: ");
+        String rodneCislo = scanner.next().replace("/", "");
         if (databazeOsob.containsKey(rodneCislo)) {
             databazeOsob.remove(rodneCislo);
             System.out.println("Osoba byla odebrána. \n");
@@ -68,8 +68,8 @@ public class Main {
         }
     }
     public static void vyhledaniOsoby() {
-        System.out.println("Zadejte rodné číslo osoby k vyhledání. Zadávejte bez lomítka (YYMMDDXXXX): ");
-        String rodneCislo = scanner.next();
+        System.out.println("Zadejte rodné číslo osoby k vyhledání:");
+        String rodneCislo = scanner.next().replace("/", "");
         if (databazeOsob.containsKey(rodneCislo)) {
             Osoba o = databazeOsob.get(rodneCislo);
             System.out.println("Informace o hledané osobě:");
