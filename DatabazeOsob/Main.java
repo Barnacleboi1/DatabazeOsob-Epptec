@@ -19,10 +19,11 @@ public class Main {
                     2. Odebrání osoby
                     3. Vyhledání osoby""");
             String vstup = scanner.next();
+
             switch (vstup) {
-                case "1"-> pridaniOsoby();
-                case "2"-> odebraniOsoby();
-                case "3"-> vyhledaniOsoby();
+                case "1" -> pridaniOsoby();
+                case "2" -> odebraniOsoby();
+                case "3" -> vyhledaniOsoby();
                 default -> {
                     System.out.println("Zadejte pouze číslo akce, kterou chcete zvolit. \n ");
                     continue;
@@ -43,6 +44,7 @@ public class Main {
         String prijmeni = scanner.next();
         System.out.println("Zadejte rodné číslo: ");
         String rodneCislo = scanner.next();
+        
         //Zde validaci osoby provádím přes gettery, protože v konstruktoru osoby se z rodného čísla odebere lomítko.
         // Tím se zajišťuje, že nemůže být přidána osoba se stejnm rodným číslem, jedna s lomítkem a jedna bez lomítka
         try {
