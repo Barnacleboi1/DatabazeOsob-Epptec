@@ -86,9 +86,13 @@ public class Main {
         if (databazeOsob.containsKey(rodneCislo)) {
             throw new IllegalArgumentException("Tato osoba již v databázi je. \n");
         }
+        /* Toto kontrolovat není potřeba, protože jméno ani přijmeni není možné zadat tak, aby to bylo prázdné,
+        protože jsme při zadávání těchto hodnot použili scanner.next() místo scanner.nextLine()
+        
         if (jmeno.isEmpty() || prijmeni.isEmpty()) {
             throw new IllegalArgumentException("Jméno a příjmení nesmí být prázdné. \n");
         }
+        */
         if (!rodneCislo.matches("\\d{6}/?\\d{4}")) {
             throw new IllegalArgumentException("Rodné číslo musí být ve formátu YYMMDDXXXX nebo YYMMDD/XXXX. \n");
         }
