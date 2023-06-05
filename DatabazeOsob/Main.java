@@ -2,12 +2,10 @@ package DatabazeOsob;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static java.time.LocalDate.now;
 
 public class Main {
     private static Map<String, Osoba> databazeOsob = new HashMap<>();
@@ -30,36 +28,35 @@ public class Main {
                     continue;
                 }
             }
-            System.out.println("Chcete program ukončit? Pokud ano, zadejte A, pokud ne, zadejte cokoli jiného");
+            System.out.println("Chcete program ukončit? Pokud ano, zadejte \"ANO\", pokud ne, zadejte cokoli jiného");
             scanner.nextLine();
             vstup = scanner.nextLine();
-            if (vstup.equals("A")) {
+            if (vstup.equalsIgnoreCase("ano")) {
                 break;
             }
         }
     }
     public static void pridaniOsoby() {
-        while (true){
-            System.out.println("Zadejte křestní jméno: ");
-            String jmeno = scanner.next();
-            System.out.println("Zadejte příjmení: ");
-            String prijmeni = scanner.next();
-            System.out.println("Zadejte rodné číslo: ");
-            String rodneCislo = scanner.next();
-            try {
-                validaceOsoby(jmeno, prijmeni, rodneCislo);
+        System.out.println("Zadejte křestní jméno: ");
+        String jmeno = scanner.next();
+        System.out.println("Zadejte příjmení: ");
+        String prijmeni = scanner.next();
+        System.out.println("Zadejte rodné číslo: ");
+        String rodneCislo = scanner.next();
+        //Zde validaci osoby provádím přes gettery, protože v konstruktoru osoby se z rodného čísla odebere lomítko.
+        // Tím se zajišťuje, že nemůže být přidána osoba se stejnm rodným číslem, jedna s lomítkem a jedna bez lomítka
+        try {
+            Osoba osoba = new Osoba(jmeno, prijmeni, rodneCislo);
+            validaceOsoby(osoba.getJmeno(), osoba.getPrijmeni(), osoba.getRodneCislo());
 
-                databazeOsob.put(rodneCislo, new Osoba(jmeno, prijmeni, rodneCislo));
-                System.out.println("Osoba byla přidána. \n");
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                return;
-            }
+            databazeOsob.put(osoba.getRodneCislo(), osoba);
+            System.out.println("Osoba byla přidána. \n");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
     public static void odebraniOsoby() {
-        System.out.println("Zadejte rodné číslo osoby, kterou chcete odebrat: ");
+        System.out.println("Zadejte rodné číslo osoby, kterou chcete odebrat. Zadávejte bez lomítka (YYMMDDXXX): ");
         String rodneCislo = scanner.next();
         if (databazeOsob.containsKey(rodneCislo)) {
             databazeOsob.remove(rodneCislo);
@@ -69,7 +66,7 @@ public class Main {
         }
     }
     public static void vyhledaniOsoby() {
-        System.out.println("Zadejte rodné číslo osoby k vyhledání: ");
+        System.out.println("Zadejte rodné číslo osoby k vyhledání. Zadávejte bez lomítka (YYMMDDXXX): ");
         String rodneCislo = scanner.next();
         if (databazeOsob.containsKey(rodneCislo)) {
             Osoba o = databazeOsob.get(rodneCislo);
@@ -97,16 +94,20 @@ public class Main {
     public static String vypocetVeku(String rodneCislo) {
         int stoletiNarozeni;
 
-        if (now().getYear() - Integer.parseInt(rodneCislo.substring(0, 2)) < 2000) {
+        if (LocalDate.now().getYear() - Integer.parseInt(rodneCislo.substring(0, 2)) < 2000) {
             stoletiNarozeni = 19;
         } else {
             stoletiNarozeni = 20;
         }
+
         int rokNarozeni = Integer.parseInt(stoletiNarozeni + rodneCislo.substring(0, 2));
         int mesicNarozeni = Integer.parseInt(rodneCislo.substring(2, 4));
         int denNarozeni = Integer.parseInt(rodneCislo.substring(4, 6));
+
         LocalDate datumNarozeni = LocalDate.of(rokNarozeni, mesicNarozeni, denNarozeni);
+
         int vek = Period.between(datumNarozeni, LocalDate.now()).getYears();
+
         return String.valueOf(vek);
     }
 }

@@ -8,7 +8,7 @@ public class Osoba {
     public Osoba(String jmeno, String prijmeni, String rodneCislo) {
         this.jmeno = jmeno;
         this.prijmeni = prijmeni;
-        this.rodneCislo = rodneCislo;
+        this.rodneCislo = rodneCislo.replace("/", "");
     }
 
     public String getJmeno() {
