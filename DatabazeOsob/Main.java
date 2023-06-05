@@ -44,7 +44,7 @@ public class Main {
         String prijmeni = scanner.next();
         System.out.println("Zadejte rodné číslo: ");
         String rodneCislo = scanner.next();
-        
+
         //Zde validaci osoby provádím přes gettery, protože v konstruktoru osoby se z rodného čísla odebere lomítko.
         // Tím se zajišťuje, že nemůže být přidána osoba se stejnm rodným číslem, jedna s lomítkem a jedna bez lomítka
         try {
@@ -93,7 +93,7 @@ public class Main {
             throw new IllegalArgumentException("Rodné číslo musí být ve formátu YYMMDDXXXX nebo YYMMDD/XXXX. \n");
         }
     }
-    public static String vypocetVeku(String rodneCislo) {
+    public static int vypocetVeku(String rodneCislo) {
         int stoletiNarozeni;
 
         if (LocalDate.now().getYear() - Integer.parseInt(rodneCislo.substring(0, 2)) < 2000) {
@@ -109,7 +109,6 @@ public class Main {
         LocalDate datumNarozeni = LocalDate.of(rokNarozeni, mesicNarozeni, denNarozeni);
 
         int vek = Period.between(datumNarozeni, LocalDate.now()).getYears();
-
-        return String.valueOf(vek);
+        return vek;
     }
 }
